@@ -1,0 +1,33 @@
+{
+	"name": "@roybarber/kombo-typescript-sdk",
+	"version": "1.0.0",
+	"description": "Typescript SDK for the Kombo.dev API",
+	"main": "dist/Api.js",
+	"types": "Api.ts",
+	"scripts": {
+		"generate": "swagger-typescript-api -p openapi.json -o",
+		"build": "tsup Api.ts",
+		"publish": "npm run publish --access public"
+	},
+	"author": "Roy Barber",
+	"license": "MIT",
+	"devDependencies": {
+		"swagger-typescript-api": "^13.0.23",
+		"tsup": "^8.3.5",
+		"typescript": "^5.7.2"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/roybarber/kombo-typescript-sdk.git"
+	},
+	"keywords": [
+		"kombo.dev",
+		"kombo",
+		"sdk",
+		"typescript"
+	],
+	"bugs": {
+		"url": "https://github.com/roybarber/kombo-typescript-sdk/issues"
+	},
+	"homepage": "https://github.com/roybarber/kombo-typescript-sdk#readme"
+}
