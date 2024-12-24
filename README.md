@@ -1,6 +1,6 @@
 # Kombo Typescript SDK
 
-Typescript SDK for the [Kombo.dev API](https://kombo.dev)
+Typescript SDK for the [Kombo.dev](https://kombo.dev) API's for HRIS, ATS & Candidates
 
 ## Installation
 
