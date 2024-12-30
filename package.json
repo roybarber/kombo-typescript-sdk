@@ -1,19 +1,16 @@
 {
 	"name": "@roybarber/kombo-typescript-sdk",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Typescript SDK for the Kombo.dev API",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"scripts": {
-		"generate": "openapi-generator-cli generate -c .openapi-generator-config.json",
 		"build": "tsc",
-		"aftergenerate": "node ./src/scripts/refine.js",
+		"prepare": "npm run build",
 		"publish": "npm publish --access=public",
-		"lint": "eslint . --ext .ts",
-		"lint:fix": "eslint . --ext .ts --fix",
-		"format": "prettier --write .",
-		"format:check": "prettier --check .",
-		"swagger": "node ./src/server.js"
+		"lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+		"openapi-ts": "openapi-ts",
+		"typecheck": "tsc --noEmit"
 	},
 	"author": "Roy Barber",
 	"license": "MIT",
