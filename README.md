@@ -31,32 +31,6 @@ You can configure the SDK globally with reusable settings like baseURL and acces
 
 **Example Configuration:**
 ```typescript
-import { Configuration, Kombo } from '@roybarber/kombo-typescript-sdk';
-
-const config = new Configuration({
-    basePath: 'https://api.yourdomain.com', // API base URL
-    accessToken: async () => 'your-access-token', // Access token logic
-});
-
-export const KomboSDK = {
-    Models: Kombo.Models,
-    Connect: new Kombo.Connect(config),
-    General: new Kombo.General(config),
-    ATS: new Kombo.ATS(config),
-    HRIS: new Kombo.HRIS(config),
-};
-```
-
-Use the configured SDK instance across your project:
-```typescript
-const integration = await KomboSDK.Connect.getIntegrationByToken({ token: 'example-token' });
-console.log(integration);
-```
-
-## Usage
-
-**Example: Fetch Integration Details**
-```typescript
 import { client, getAtsJobs } from '@roybarber/kombo-typescript-sdk';
 
 // You can make the below reusable
