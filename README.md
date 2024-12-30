@@ -1,50 +1,88 @@
 # Kombo Typescript SDK
 
-Typescript SDK for the [Kombo.dev](https://kombo.dev) API's for HRIS, ATS & Candidates
+The **Kombo Typescript SDK** simplifies the integration with Kombo's ATS, HRIS, and assessment APIs. It provides prebuilt API methods and models with full TypeScript support, making it easy to build scalable and type-safe applications.
+
+---
+
+## Key Features
+
+- **Simplified API Access**: Predefined methods for all major endpoints.
+- **TypeScript Support**: Built-in types and models for better developer experience.
+- **Centralized Namespace**: Access all APIs and models through the unified `Kombo` namespace.
+- **Configurable**: Support for global configuration (e.g., base URL, access tokens).
+
+---
 
 ## Installation
 
-In order to install the package, please run the following command:
+Install the SDK using NPM or Yarn:
 
 ```bash
 npm install @roybarber/kombo-typescript-sdk
+
+Or with Yarn:
+
+yarn add @roybarber/kombo-typescript-sdk
+```
+
+## Configuration
+
+You can configure the SDK globally with reusable settings like baseURL and accessToken.
+
+**Example Configuration:**
+```typescript
+import { Configuration, Kombo } from '@roybarber/kombo-typescript-sdk';
+
+const config = new Configuration({
+    basePath: 'https://api.yourdomain.com', // API base URL
+    accessToken: async () => 'your-access-token', // Access token logic
+});
+
+export const KomboSDK = {
+    Models: Kombo.Models,
+    Connect: new Kombo.Connect(config),
+    General: new Kombo.General(config),
+    ATS: new Kombo.ATS(config),
+    HRIS: new Kombo.HRIS(config),
+};
+```
+
+Use the configured SDK instance across your project:
+```typescript
+const integration = await KomboSDK.Connect.getIntegrationByToken({ token: 'example-token' });
+console.log(integration);
 ```
 
 ## Usage
 
+**Example: Fetch Integration Details**
 ```typescript
-import { Api } from '@roybarber/kombo-typescript-sdk'
+import { client, getAtsJobs } from '@roybarber/kombo-typescript-sdk';
 
-const authorizationToken = process.env.KOMBO_API_KEY
+// You can make the below reusable
+client.setConfig({
+  baseUrl: 'https://api.kombo.dev/v1',
+  headers: {
+    Authorization: 'Bearer process.env.KOMBO_API_TOKEN',
+  },
+});
 
-// Create client
-const komboApi = new Api<string>({
-  securityWorker: (accessToken) =>
-    accessToken ? { headers: { Authorization: `Bearer ${accessToken}` } } : {}
-})
-// Set API Key
-komboApi.setSecurityData(authorizationToken);
-
-// Use client to e.g. fetch all absence types, don't forget to set the integration id in the headers
-const integrationId = 'workday:1234567890'
-const result = await komboApi.hris.getHrisAbsenceTypes(
-  { page_size: 250 }, // 250 MAX
-  { headers: { 'X-Integration-Id': integrationId } }
-)
-console.log(result.data.data.results)
+const { data, error } = await getAtsJobs({
+  headers: {
+    'X-Integration-Id': 'your-integration-id'
+  },
+  query: {
+    statuses: 'OPEN,DRAFT',
+    employment_types: 'FULL_TIME,PART_TIME',
+    updated_after: '2024-01-01T00:00:00.000Z',
+    name_contains: 'Developer'
+  }
+});
+console.log('Integration Details:', data);
 ```
 
-## Development
+---
 
-### How to build a new version of the Kombo Typescript SDK 
+### API Reference
 
-When the Kombo api changes we need to ensure we are building a new version of this package
-
-Step 1: Download the openapi schema (`openapi.json`) from [Kombo](https://api.kombo.dev/openapi.json). And put it into this folder here
-
-Step 2: Build the Api.ts file with new open api schema
-`npm run generate`
-
-Step 3: Update package.json and bump version e.g. `1.X.0`
-
-Step 4: Run `npm run build` to build new Api.js file in dist folder
+**TODO**

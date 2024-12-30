@@ -1,0 +1,6 @@
+src/
+.eslintrc.cjs
+tsconfig.json
+tsconfig.node.json
+.prettierrc.json
+openapi-ts.config.json

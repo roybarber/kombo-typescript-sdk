@@ -2,17 +2,26 @@
 	"name": "@roybarber/kombo-typescript-sdk",
 	"version": "1.0.0",
 	"description": "Typescript SDK for the Kombo.dev API",
-	"main": "dist/Api.js",
-	"types": "Api.ts",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
 	"scripts": {
-		"generate": "swagger-typescript-api -p openapi.json -o",
-		"build": "tsup Api.ts",
-		"publish": "npm run publish --access public"
+		"generate": "openapi-generator-cli generate -c .openapi-generator-config.json",
+		"build": "tsc",
+		"aftergenerate": "node ./src/scripts/refine.js",
+		"publish": "npm publish --access=public",
+		"lint": "eslint . --ext .ts",
+		"lint:fix": "eslint . --ext .ts --fix",
+		"format": "prettier --write .",
+		"format:check": "prettier --check .",
+		"swagger": "node ./src/server.js"
 	},
 	"author": "Roy Barber",
 	"license": "MIT",
 	"devDependencies": {
-		"swagger-typescript-api": "^13.0.23",
+		"eslint": "^9.17.0",
+		"eslint-config-prettier": "^9.1.0",
+		"eslint-plugin-prettier": "^5.2.1",
+		"prettier": "^3.4.2",
 		"tsup": "^8.3.5",
 		"typescript": "^5.7.2"
 	},
@@ -29,5 +38,9 @@
 	"bugs": {
 		"url": "https://github.com/roybarber/kombo-typescript-sdk/issues"
 	},
-	"homepage": "https://github.com/roybarber/kombo-typescript-sdk#readme"
+	"homepage": "https://github.com/roybarber/kombo-typescript-sdk#readme",
+	"dependencies": {
+		"@types/node": "^22.10.2",
+		"swagger-ui-express": "^5.0.1"
+	}
 }
